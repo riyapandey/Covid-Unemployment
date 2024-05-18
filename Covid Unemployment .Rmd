@@ -1,6 +1,6 @@
 ---
-title: "COVID Unemployment - Report"
-author: "Riya Pandey (STAT 612) and Rebecca Andrade (STAT 612)"
+title: "COVID Unemployment"
+author: "Riya Pandey"
 date: "2023-05-09"
 output: pdf_document
 colortheme: "dolphin"
@@ -60,7 +60,6 @@ library(lmtest)
 ```
 
 ```{r, echo=FALSE}
-#Riya and Rebecca
 Employment_status <- read.csv("data/EmploymentStatus.csv")
 
 Employment_status_categories <- Employment_status %>% 
@@ -129,7 +128,6 @@ covid_data <- rbind(data_2019,data_2020)
 # Employment Population by Year
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
-#Rebecca
 
 # To understand the distribution of population from 2015-2022
 population <- Demographics %>% 
@@ -144,7 +142,6 @@ In our exploratory data analysis, we first wanted to get an overview of the empl
 
 # OLS regression for initial analysis
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=3}
-#Riya
 
 ols_model <- lm(Population ~., data = Demographics)
 #summary(ols_model)
@@ -152,7 +149,7 @@ ols_model <- lm(Population ~., data = Demographics)
 *[Appendix 1]* After conducting initial exploratory data analysis on employment population and year, we conducted an initial OLS regression to investigate the impact of demographic variables such as age, gender, and race on employment population during the pandemic. The regression results indicated that all the demographic variables had a significant impact on employment status during the pandemic. The variable Year may not have shown significance in the model because the impact of the pandemic might not have been significant enough in the earlier years to have a noticeable effect on the overall employment population. Therefore, the inclusion of these earlier years might have diluted the effect of the pandemic on the employment population and reduced the significance of the variable Year in the model.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=3}
-#Rebecca
+
 
 #Employment population filtered by gender over the years 2015-2022
 gender <- Demographics %>%  
@@ -171,7 +168,6 @@ gender <- Demographics %>%
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-#Riya
 
 #Using Years 2019 and 2020 only
 gender$Men_pct_change <- c(NA, diff(gender$Men) / gender$Men[-length(gender$Men)] * 100)
@@ -183,7 +179,6 @@ genderpct <- gender %>%
 
 # Percent Employment Change of Men and Women in 2019 and 2020 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=8, fig.height=4}
-#Riya
 
 # Create the plot
 ggplot(gender, aes(x = Year, y = Men_pct_change, group = 1)) +
@@ -199,7 +194,6 @@ To explore the impact of the pandemic on employment between genders, we calculat
 ## Statistical Analysis: **t-test**
 
 ```{r, echo=FALSE, message=FALSE}
-#Riya
 
 # Statistical analysis =  t-test
 # Calculating the mean employment numbers for men and women from 2015 to 2019
@@ -217,7 +211,6 @@ To confirm our hypothesis, we conducted a t-test to compare the mean employment 
 
 # Employment Population in different Age Groups filtered by gender (2019 and 2020)
 ```{r, echo = FALSE, fig.width=11, fig.height=4}
-#Rebecca
 
 #EDA
 #Age_groups in 2019 and 2020 filtered by gender   --- try another 
@@ -235,7 +228,6 @@ After our initial analysis, we wanted to delve deeper into the impact of COVID-1
 
 # Employment Population in different races filtered by gender (2019 and 2020)
 ```{r, echo = FALSE, fig.width=11, fig.height=5}
-#Rebecca
 
 # race vs population by gender
 ggplot(covid_data, aes(x = gender, y = Population, fill = race)) + 
@@ -249,7 +241,6 @@ After exploring the data for other variables, we wanted to investigate the impac
 
 ## Impact of the pandemic on younger workers across different races and gender
 ```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.width=11, fig.height=6}
-#Riya
 
 #Impact of the pandemic on younger workers across different demographic groups
 # Calculate the percentage of job losses or reduced hours for each age group before and after the pandemic
@@ -277,7 +268,6 @@ To gain a better understanding of the extent of the pandemic's impact on employm
 
 ## Staistical Analysis: **ANOVA and Linear Regression**
 ```{r, echo = FALSE}
-#Riya
 
 #statistical analysis
 # Two-way ANOVA for Age_Group, Race and Employment Population
@@ -294,7 +284,6 @@ Our model was built to explore the relationship between population size and age 
 ## Industry
 # Bar chart of percentage change in population for each industry from 2019 to 2020
 ```{r, echo=FALSE, message=FALSE, fig.width=10, fig.height=5}
-#Rebecca
 
 # Percentage change in population for each industry from 2019 to 2020
 Industry_summary <- Industry %>% 
@@ -311,7 +300,6 @@ After analyzing the data on industries, we calculated the percentage change in e
 
 ## Affected Supersectors EDA
 ```{r, echo=FALSE, fig.width=11, fig.height=5}
-#Rebecca
 
 #Industry
 # Most & Least affected industries
@@ -353,7 +341,6 @@ Based on this confirmation, we decided to concentrate on analyzing the COVID aff
 
 The ANOVA table above shows the results of the statistical analysis conducted on the annual percent change as a function of being in the “Affected” group. It shows that there is a somewhat significant difference in the annual percent change between the "Affected" group and the "Unaffected" group. However, we were not satisfied with this level of significance. 
 ```{r, echo=FALSE}
-#Riya
 
 #Statistical Analysis
 # Create a new column indicating whether each industry is affected or unaffected
@@ -371,7 +358,6 @@ After adjusting the grouping, we created a new "Affected" group that included th
 Specifically, we found support for the hypothesis that the Leisure and Hospitality supersector is in the affected group. On the other hand, we rejected the hypothesis that the Transportation and Utilities supersector is in the affected group. Finally, we found support for the hypothesis that the Private education and health services supersector is not in the affected group. These findings suggest that the new grouping of industries better captures the factors that are affecting changes in annual percent change.
 
 ```{r, echo=FALSE}
-#Riya
 
 covid_affected_b <- c('Leisure and hospitality', 'Mining and logging', 
                       'Other services', 'Retail trade')
